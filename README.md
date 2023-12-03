@@ -1,2 +1,3 @@
 # users-database
-Simple CRUD REST API
+
+A simple CRUD RESTful API that allows interact with a database
