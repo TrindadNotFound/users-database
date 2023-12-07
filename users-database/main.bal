@@ -33,11 +33,15 @@ service /users on new http:Listener(9090)
         return from var user in userStream select user; 
     }
 
+    resource function get user/[int id]() returns User|error {
+        User|sql:Error result = dbConn -> queryRow(`SELECT * FROM info WHERE id=${id}`);
+        return result;
+    }
+
     resource function post newuser(NewUser newuser) returns http:Created|error
     {
         _ = check dbConn -> execute(`INSERT INTO info(first_name, last_name, birthdate) VALUES (${newuser.first_name}, ${newuser.last_name}, ${newuser.birthdate});`);
         return http:CREATED;
     }
-
 }   
 
